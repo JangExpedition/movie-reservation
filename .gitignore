@@ -1,0 +1,20 @@
+# Dependencies
+/node_modules
+
+# Build output
+/dist
+/build
+
+# Environment variables
+.env
+
+# IDE/Editor specific files
+.idea
+.vscode
+
+# Compiled TypeScript
+*.js
+*.js.map
+
+# Compiled SCSS
+*.css
