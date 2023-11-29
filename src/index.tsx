@@ -1,8 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import SignInPage from "./pages/SignInPage";
 
 const App: React.FC = () => {
-  return <div>Hello, React with TypeScript!</div>;
+  return <SignInPage />;
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const root = document.getElementById("root");
+
+root ? createRoot(root).render(<App />) : console.error("Root Element를 찾을 수 없습니다.");
