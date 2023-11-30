@@ -1,37 +1,53 @@
 import React, { useEffect, useRef } from "react";
 
 import { useState } from "react";
-import { TextFieldType, ValidateRule } from "../types";
-import { RequireRule } from "../constant";
+import { ValidateRule } from "../types";
+import {
+  RequireRule,
+  CantContainWhitespace,
+  CantStartNumber,
+  MinimumLengthLimit,
+} from "../constant";
 import { nextTick } from "../utils";
+import { InputType } from "../types";
 
-const TextField = (props: TextFieldType) => {
-  const [data, setData] = useState({ ...props });
+const DefaultProps: InputType = {
+  id: "",
+  label: "label",
+  type: "text",
+  placeholder: "",
+  require: false,
+};
+
+const TextField = (props: InputType) => {
+  const [data, setData] = useState({ ...DefaultProps, ...props });
   const [updated, setUpdated] = useState(false);
   const [validateRules, setValidateRules] = useState<ValidateRule[]>([]);
   const [valid, setValid] = useState(false);
   const [validateMessage, setValidateMessage] = useState("");
+  const textInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (data.require) {
       addValidateRule(RequireRule);
     }
-  }, []);
+
+    if (data.id === "id") {
+      addValidateRule(CantContainWhitespace);
+      addValidateRule(CantStartNumber);
+      addValidateRule(MinimumLengthLimit(3));
+    } else if (data.id === "email") {
+      addValidateRule(CantContainWhitespace);
+    }
+  }, [data]);
 
   const addValidateRule = (rule: ValidateRule) => {
     setValidateRules((prevState) => [...prevState, rule]);
   };
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdated(true);
-    setData({
-      ...data,
-      text: e.target.value,
-    });
-  };
+  const onChangeHandler = () => {
+    const isInvalid: ValidateRule | null = validate();
 
-  useEffect(() => {
-    const isInvalid = validate();
     if (updated) {
       setValid(!isInvalid);
       setValidateMessage(!!isInvalid ? isInvalid.message : "");
@@ -39,11 +55,11 @@ const TextField = (props: TextFieldType) => {
       setValid(true);
       setValidateMessage("");
     }
-  }, [updated]);
+  };
 
-  const validate = () => {
-    const target = data.text ? data.text.trim() : "";
-
+  const validate = (): ValidateRule | null => {
+    const target = textInput.current?.value ? textInput.current.value.trim() : "";
+    console.log(target);
     const invalidateRules = validateRules.filter(
       (validateRule) => validateRule.rule.test(target) !== validateRule.match
     );
@@ -75,11 +91,15 @@ const TextField = (props: TextFieldType) => {
         type={data.type}
         id={data.id}
         name={data.id}
-        value={data.text}
         placeholder={data.placeholder}
         aria-label="Name"
         className="text-input"
-        onChange={(e) => onChangeHandler}
+        ref={textInput}
+        onChange={() => {
+          setUpdated(true);
+          nextTick(onChangeHandler);
+        }}
+        {...(data.require ? { required: true } : {})}
       />
       {!valid && (
         <div className="label-wrapper">
