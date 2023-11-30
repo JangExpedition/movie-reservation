@@ -1,11 +1,11 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import SignInPage from "./pages/SignInPage";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 
-const App: React.FC = () => {
-  return <SignInPage />;
-};
-
-const root = document.getElementById("root");
-
-root ? createRoot(root).render(<App />) : console.error("Root Element를 찾을 수 없습니다.");
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
