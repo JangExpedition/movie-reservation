@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Acceptor, TextFieldProps } from "../types/TextFieldTypes";
+import { classAddAndRemove } from "../utils";
+import "./TextField.scss";
 
 const TextField: React.FC<TextFieldProps> = ({ data }) => {
   const [inputValue, setInputValue] = useState(data.text);
@@ -7,6 +9,7 @@ const TextField: React.FC<TextFieldProps> = ({ data }) => {
   const [failMessage, setFailMessage] = useState("");
 
   const checker = useRef<HTMLSpanElement>(null);
+  const textInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     inputValue && tester(inputValue);
@@ -14,21 +17,24 @@ const TextField: React.FC<TextFieldProps> = ({ data }) => {
 
   const tester = (value: string) => {
     const result = isAccept(acceptors, value);
+
     if (result) {
       setFailMessage(result);
       if (checker.current?.classList.contains("accept")) {
-        checker.current?.classList.remove("accept");
-        checker.current?.classList.add("default");
+        classAddAndRemove(checker.current, "default", "accept");
+        classAddAndRemove(textInput.current, "fail-bg", "default-bg");
       } else {
         checker.current?.classList.add("default");
+        textInput.current?.classList.add("fail-bg");
       }
     } else {
       setFailMessage("");
       if (checker.current?.classList.contains("default")) {
-        checker.current?.classList.remove("default");
-        checker.current?.classList.add("accept");
+        classAddAndRemove(checker.current, "accept", "default");
+        classAddAndRemove(textInput.current, "default-bg", "fail-bg");
       } else {
         checker.current?.classList.add("accept");
+        textInput.current?.classList.add("default-bg");
       }
     }
   };
@@ -39,7 +45,7 @@ const TextField: React.FC<TextFieldProps> = ({ data }) => {
   };
 
   return (
-    <div className="text-field">
+    <div className="TextField">
       <div className="label-wrapper">
         <span className="checker default" ref={checker}>
           <svg className="" viewBox="0 0 20 20" fill="currentColor">
@@ -53,10 +59,12 @@ const TextField: React.FC<TextFieldProps> = ({ data }) => {
         <label htmlFor="name">{data.title}</label>
       </div>
       <input
-        type="text"
+        type={data.type}
         id={data.id}
         name={data.id}
         placeholder={data.placeholder}
+        className="default-bg"
+        ref={textInput}
         onChange={(e) => setInputValue(e.target.value)}
       />
       <p className="fail-message">{failMessage}</p>

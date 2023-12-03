@@ -3,6 +3,12 @@
   min-height: 100vh;
 }
 
+@media screen and (max-width: 768px) {
+  * {
+    font-size: 12px;
+  }
+}
+
 $gray-color-300: #e2e8f0;
 $gray-color-500: #a0aec0;
 

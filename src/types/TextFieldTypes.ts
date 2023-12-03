@@ -8,6 +8,7 @@ export type TextFieldType = {
   title: string;
   text: string;
   id: string;
+  type: string;
   placeholder: string;
   acceptors: Acceptor[];
 };
