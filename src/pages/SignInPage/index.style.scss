@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@import "../../App.style.scss";
 
 .SignInPage {
   width: 100%;
@@ -19,6 +19,10 @@ input {
 
 .default {
   color: $gray-color-500;
+}
+
+.active-bg {
+  background-color: $base-color-500;
 }
 
 .default-bg {

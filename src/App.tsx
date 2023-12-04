@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.scss";
+import "./App.style.scss";
 import SignInPage from "./pages/SignInPage";
 
 const App: React.FC = () => {

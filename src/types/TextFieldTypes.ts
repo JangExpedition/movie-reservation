@@ -6,7 +6,6 @@ export type Acceptor = {
 
 export type TextFieldType = {
   title: string;
-  text: string;
   id: string;
   type: string;
   placeholder: string;
@@ -15,4 +14,5 @@ export type TextFieldType = {
 
 export type TextFieldProps = {
   data: TextFieldType;
+  handleValidationResult: (isVaild: boolean) => void;
 };

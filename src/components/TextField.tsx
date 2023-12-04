@@ -1,53 +1,85 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Acceptor, TextFieldProps } from "../types/TextFieldTypes";
+import { FailMessage } from "./index";
 import { classAddAndRemove } from "../utils";
-import "./TextField.scss";
+import "./TextField.style.scss";
 
-const TextField: React.FC<TextFieldProps> = ({ data }) => {
-  const [inputValue, setInputValue] = useState(data.text);
-  const [acceptors, setAcceptors] = useState(data.acceptors);
+const TextField: React.FC<TextFieldProps> = ({ data, handleValidationResult }) => {
+  const [strongLevel, setStrongLevel] = useState(0);
   const [failMessage, setFailMessage] = useState("");
 
   const checker = useRef<HTMLSpanElement>(null);
   const textInput = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (inputValue) {
-      tester(inputValue);
-    } else {
-      if (checker.current?.classList.contains("accept")) {
-        classAddAndRemove(checker.current, "default", "accept");
-      }
-    }
-  }, [inputValue]);
-
   const tester = (value: string) => {
-    const result = isAccept(acceptors, value);
-
-    if (result) {
-      setFailMessage(result);
-      if (checker.current?.classList.contains("accept")) {
-        classAddAndRemove(checker.current, "default", "accept");
-        classAddAndRemove(textInput.current, "fail-bg", "default-bg");
+    if (data.type === "password") {
+      const result = strongLevelTester(value);
+      if (result > 0) {
+        successImpact();
       } else {
-        checker.current?.classList.add("default");
-        textInput.current?.classList.add("fail-bg");
+        failImpact();
+        setFailMessage(data.acceptors[0].message);
       }
     } else {
-      setFailMessage("");
-      if (checker.current?.classList.contains("default")) {
-        classAddAndRemove(checker.current, "accept", "default");
-        classAddAndRemove(textInput.current, "default-bg", "fail-bg");
+      const result = isAccept(data.acceptors, value);
+      if (result) {
+        setFailMessage(result);
+        if (checker.current?.classList.contains("accept")) {
+          failImpact();
+        } else {
+          checker.current?.classList.add("default");
+          textInput.current?.classList.add("fail-bg");
+        }
       } else {
-        checker.current?.classList.add("accept");
-        textInput.current?.classList.add("default-bg");
+        setFailMessage("");
+        if (checker.current?.classList.contains("default")) {
+          successImpact();
+        } else {
+          checker.current?.classList.add("accept");
+          textInput.current?.classList.add("default-bg");
+        }
       }
     }
+  };
+
+  const successImpact = () => {
+    classAddAndRemove(checker.current, "accept", "default");
+    classAddAndRemove(textInput.current, "default-bg", "fail-bg");
+    handleValidationResult(true);
+  };
+
+  const failImpact = () => {
+    classAddAndRemove(checker.current, "default", "accept");
+    classAddAndRemove(textInput.current, "fail-bg", "default-bg");
+    handleValidationResult(false);
   };
 
   const isAccept = (acceptors: Acceptor[], value: string) => {
     const result = acceptors.filter((acceptor) => acceptor.rule.test(value) !== acceptor.match);
     return result.length > 0 ? result[0].message : null;
+  };
+
+  const strongLevelTester = (value: string): number => {
+    let level = 0;
+
+    if (value.length > 0) {
+      level++;
+    }
+
+    if (value.length > 8) {
+      level++;
+    }
+
+    if (/[!@#$%^&*()]/.test(value)) {
+      level++;
+    }
+
+    if (/\d/.test(value)) {
+      level++;
+    }
+
+    setStrongLevel(level);
+    return level;
   };
 
   return (
@@ -71,9 +103,9 @@ const TextField: React.FC<TextFieldProps> = ({ data }) => {
         placeholder={data.placeholder}
         className="default-bg"
         ref={textInput}
-        onChange={(e) => setInputValue(e.target.value)}
+        onBlur={(e) => tester(e.target.value)}
       />
-      <p className="fail-message">{failMessage}</p>
+      <FailMessage failMessage={failMessage} strongLevel={strongLevel} />
     </div>
   );
 };

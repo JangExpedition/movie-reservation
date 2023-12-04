@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./AddressField.scss";
+import "./AddressField.style.scss";
 import { DaumAddress } from "../types/AddressFieldTypes";
 
 const AddressField = () => {

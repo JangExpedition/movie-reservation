@@ -1,0 +1,33 @@
+@import "../pages/SignInPage/index.style.scss";
+
+.FailMessage {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  color: $gray-color-500;
+  .strong-level-checker {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.fail {
+  color: #fc8181;
+}
+
+.strong-0 {
+  color: $base-color-300;
+}
+
+.strong-1 {
+  color: $base-color-500;
+}
+
+.strong-2 {
+  color: $base-color-700;
+}
+
+.strong-3 {
+  color: $base-color-900;
+}

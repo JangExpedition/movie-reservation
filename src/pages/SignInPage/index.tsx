@@ -1,5 +1,5 @@
-import AddressField from "../../components/AddressField";
-import TextField from "../../components/TextField";
+import { useState } from "react";
+import { TextField, AddressField } from "../../components";
 import { Acceptor, TextFieldType } from "../../types/TextFieldTypes";
 import "./index.style.scss";
 
@@ -28,10 +28,11 @@ const minLengthAcceptor = (limit: number): Acceptor => ({
 });
 
 const SignInPage: React.FC = () => {
+  const [disabled, setDisabled] = useState(false);
+
   const textFieldList: TextFieldType[] = [
     {
       title: "이름",
-      text: "",
       id: "name",
       type: "text",
       placeholder: "이름을 입력해주세요.",
@@ -39,7 +40,6 @@ const SignInPage: React.FC = () => {
     },
     {
       title: "아이디",
-      text: "",
       id: "id",
       type: "text",
       placeholder: "아이디를 입력해주세요.",
@@ -47,7 +47,6 @@ const SignInPage: React.FC = () => {
     },
     {
       title: "이메일",
-      text: "",
       id: "email",
       type: "email",
       placeholder: "이메일을 입력해주세요.",
@@ -55,23 +54,42 @@ const SignInPage: React.FC = () => {
     },
     {
       title: "비밀번호",
-      text: "",
       id: "password",
       type: "password",
       placeholder: "비밀번호를 입력해주세요.",
-      acceptors: [whitespaceAcceptor, requireAcceptor, minLengthAcceptor(5)],
+      acceptors: [requireAcceptor],
     },
   ];
+
+  const handleValidationResult = (isValid: boolean) => {
+    const allFieldsValid = textFieldList.every((field) => {
+      debugger;
+      return field.acceptors.every((acceptor) => acceptor.match);
+    });
+
+    console.log(allFieldsValid);
+
+    setDisabled(allFieldsValid);
+  };
+
   return (
     <div className="SignInPage">
       <form className="sign-in-form">
         {textFieldList.map((textField) => (
-          <TextField key={textField.id} data={textField} />
+          <TextField
+            key={textField.id}
+            data={textField}
+            handleValidationResult={handleValidationResult}
+          />
         ))}
         <p>선택 입력사항</p>
         <AddressField />
         <div className="btn-wrapper">
-          <button className="btn-join" type="submit">
+          <button
+            className={`btn-join ${!disabled ? "default-bg" : "active-bg"}`}
+            type="submit"
+            disabled={!disabled}
+          >
             회원 가입
           </button>
         </div>
