@@ -9,6 +9,10 @@
   background-color: $gray-color-300;
 }
 
+input {
+  font-size: 0.75rem;
+}
+
 .accept {
   color: $base-color-700;
 }
@@ -26,11 +30,14 @@
 }
 
 .sign-in-form {
-  width: 30%;
+  width: 20%;
   height: 60%;
   border-radius: 2rem;
   background-color: #fff;
   padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   p {
     color: $gray-color-500;
     font-size: 0.75rem;
@@ -54,5 +61,6 @@
 @media screen and (max-width: 768px) {
   .sign-in-form {
     width: 70%;
+    height: 80%;
   }
 }

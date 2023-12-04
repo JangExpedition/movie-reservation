@@ -12,7 +12,13 @@ const TextField: React.FC<TextFieldProps> = ({ data }) => {
   const textInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputValue && tester(inputValue);
+    if (inputValue) {
+      tester(inputValue);
+    } else {
+      if (checker.current?.classList.contains("accept")) {
+        classAddAndRemove(checker.current, "default", "accept");
+      }
+    }
   }, [inputValue]);
 
   const tester = (value: string) => {
