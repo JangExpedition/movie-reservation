@@ -96,9 +96,34 @@ const SignInPage: React.FC = () => {
     }
   };
 
+  const formSubmitHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const arr: Array<[string, string]> = [];
+
+    formData.forEach((value: FormDataEntryValue, key: string) => {
+      arr.push([key, value.toString()]);
+    });
+
+    let id = "";
+
+    const result = arr.reduce((acc, [key, value]) => {
+      if (key === "id") {
+        id = value;
+      }
+      return (acc = {
+        [key]: value,
+        ...acc,
+      });
+    }, {});
+
+    localStorage.setItem(id, JSON.stringify(result));
+  };
+
   return (
     <div className="SignInPage">
-      <form className="sign-in-form">
+      <form className="sign-in-form" onSubmit={(e) => formSubmitHandler(e)}>
         {textFieldList.map((textField) => (
           <TextField
             key={textField.id}
