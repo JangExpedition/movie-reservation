@@ -27,6 +27,7 @@ const TextField: React.FC<TextFieldProps> = ({ data, handleValidationResult }) =
         if (checker.current?.classList.contains("accept")) {
           failImpact();
         } else {
+          handleValidationResult(data.id, false);
           checker.current?.classList.add("default");
           textInput.current?.classList.add("fail-bg");
         }
@@ -35,6 +36,7 @@ const TextField: React.FC<TextFieldProps> = ({ data, handleValidationResult }) =
         if (checker.current?.classList.contains("default")) {
           successImpact();
         } else {
+          handleValidationResult(data.id, true);
           checker.current?.classList.add("accept");
           textInput.current?.classList.add("default-bg");
         }
@@ -45,13 +47,13 @@ const TextField: React.FC<TextFieldProps> = ({ data, handleValidationResult }) =
   const successImpact = () => {
     classAddAndRemove(checker.current, "accept", "default");
     classAddAndRemove(textInput.current, "default-bg", "fail-bg");
-    handleValidationResult(true);
+    handleValidationResult(data.id, true);
   };
 
   const failImpact = () => {
     classAddAndRemove(checker.current, "default", "accept");
     classAddAndRemove(textInput.current, "fail-bg", "default-bg");
-    handleValidationResult(false);
+    handleValidationResult(data.id, false);
   };
 
   const isAccept = (acceptors: Acceptor[], value: string) => {

@@ -35,27 +35,25 @@ input {
 
 .sign-in-form {
   width: 20%;
-  height: 60%;
   border-radius: 2rem;
   background-color: #fff;
-  padding: 2rem 2.5rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   p {
     color: $gray-color-500;
     font-size: 0.75rem;
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
   }
   .btn-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     .btn-join {
       cursor: pointer;
       padding: 0.5rem 1.5rem;
       color: #fff;
-      background-color: $gray-color-500;
       border-radius: 0.25rem;
       border: none;
     }

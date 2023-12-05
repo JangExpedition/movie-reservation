@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField, AddressField } from "../../components";
 import { Acceptor, TextFieldType } from "../../types/TextFieldTypes";
 import "./index.style.scss";
@@ -27,49 +27,73 @@ const minLengthAcceptor = (limit: number): Acceptor => ({
   message: `최소한 ${limit}글자 이상 이어야 합니다.`,
 });
 
+const textFieldList: TextFieldType[] = [
+  {
+    title: "이름",
+    id: "name",
+    type: "text",
+    placeholder: "이름을 입력해주세요.",
+    acceptors: [whitespaceAcceptor, requireAcceptor, startNumberAcceptor],
+  },
+  {
+    title: "아이디",
+    id: "id",
+    type: "text",
+    placeholder: "아이디를 입력해주세요.",
+    acceptors: [whitespaceAcceptor, requireAcceptor, startNumberAcceptor, minLengthAcceptor(5)],
+  },
+  {
+    title: "이메일",
+    id: "email",
+    type: "email",
+    placeholder: "이메일을 입력해주세요.",
+    acceptors: [whitespaceAcceptor, requireAcceptor],
+  },
+  {
+    title: "비밀번호",
+    id: "password",
+    type: "password",
+    placeholder: "비밀번호를 입력해주세요.",
+    acceptors: [requireAcceptor],
+  },
+];
+
+const AllIsValid = [
+  {
+    id: "name",
+    isPass: false,
+  },
+  {
+    id: "id",
+    isPass: false,
+  },
+  {
+    id: "email",
+    isPass: false,
+  },
+  {
+    id: "password",
+    isPass: false,
+  },
+];
+
 const SignInPage: React.FC = () => {
   const [disabled, setDisabled] = useState(false);
 
-  const textFieldList: TextFieldType[] = [
-    {
-      title: "이름",
-      id: "name",
-      type: "text",
-      placeholder: "이름을 입력해주세요.",
-      acceptors: [whitespaceAcceptor, requireAcceptor, startNumberAcceptor],
-    },
-    {
-      title: "아이디",
-      id: "id",
-      type: "text",
-      placeholder: "아이디를 입력해주세요.",
-      acceptors: [whitespaceAcceptor, requireAcceptor, startNumberAcceptor, minLengthAcceptor(5)],
-    },
-    {
-      title: "이메일",
-      id: "email",
-      type: "email",
-      placeholder: "이메일을 입력해주세요.",
-      acceptors: [whitespaceAcceptor, requireAcceptor],
-    },
-    {
-      title: "비밀번호",
-      id: "password",
-      type: "password",
-      placeholder: "비밀번호를 입력해주세요.",
-      acceptors: [requireAcceptor],
-    },
-  ];
+  useEffect(() => {}, [AllIsValid]);
 
-  const handleValidationResult = (isValid: boolean) => {
-    const allFieldsValid = textFieldList.every((field) => {
-      debugger;
-      return field.acceptors.every((acceptor) => acceptor.match);
+  const handleValidationResult = (id: string, isValid: boolean) => {
+    AllIsValid.map((valid) => {
+      if (valid.id === id) {
+        valid.isPass = isValid;
+      }
     });
 
-    console.log(allFieldsValid);
-
-    setDisabled(allFieldsValid);
+    if (AllIsValid.filter((valid) => valid.isPass === true).length === 4) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
   };
 
   return (

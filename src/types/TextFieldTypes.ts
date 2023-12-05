@@ -14,5 +14,5 @@ export type TextFieldType = {
 
 export type TextFieldProps = {
   data: TextFieldType;
-  handleValidationResult: (isVaild: boolean) => void;
+  handleValidationResult: (id: string, isVaild: boolean) => void;
 };
