@@ -1,31 +1,15 @@
 import { useEffect, useState } from "react";
 import { TextField, AddressField } from "../../components";
-import { Acceptor, TextFieldType } from "../../types/TextFieldTypes";
+import { TextFieldType } from "../../types/TextFieldTypes";
 import "./index.style.scss";
-
-const whitespaceAcceptor: Acceptor = {
-  rule: /\s/,
-  match: false,
-  message: "공백문자는 포함할 수 없습니다.",
-};
-
-const requireAcceptor: Acceptor = {
-  rule: /.+/,
-  match: true,
-  message: "필수 입력 항목입니다.",
-};
-
-const startNumberAcceptor: Acceptor = {
-  rule: /^\d/,
-  match: false,
-  message: "숫자로 시작하는 아이디는 사용할 수 없습니다.",
-};
-
-const minLengthAcceptor = (limit: number): Acceptor => ({
-  rule: new RegExp(`(.){${limit}}`),
-  match: true,
-  message: `최소한 ${limit}글자 이상 이어야 합니다.`,
-});
+import {
+  ContainNumberAcceptor,
+  EmailAcceptor,
+  MinLengthAcceptor,
+  RequireAcceptor,
+  StartNumberAcceptor,
+  WhitespaceAcceptor,
+} from "../../utils";
 
 const textFieldList: TextFieldType[] = [
   {
@@ -33,28 +17,28 @@ const textFieldList: TextFieldType[] = [
     id: "name",
     type: "text",
     placeholder: "이름을 입력해주세요.",
-    acceptors: [whitespaceAcceptor, requireAcceptor, startNumberAcceptor],
+    acceptors: [WhitespaceAcceptor, RequireAcceptor, StartNumberAcceptor, ContainNumberAcceptor],
   },
   {
     title: "아이디",
     id: "id",
     type: "text",
     placeholder: "아이디를 입력해주세요.",
-    acceptors: [whitespaceAcceptor, requireAcceptor, startNumberAcceptor, minLengthAcceptor(5)],
+    acceptors: [WhitespaceAcceptor, RequireAcceptor, StartNumberAcceptor, MinLengthAcceptor(5)],
   },
   {
     title: "이메일",
     id: "email",
     type: "email",
     placeholder: "이메일을 입력해주세요.",
-    acceptors: [whitespaceAcceptor, requireAcceptor],
+    acceptors: [EmailAcceptor],
   },
   {
     title: "비밀번호",
     id: "password",
     type: "password",
     placeholder: "비밀번호를 입력해주세요.",
-    acceptors: [requireAcceptor],
+    acceptors: [RequireAcceptor],
   },
 ];
 
