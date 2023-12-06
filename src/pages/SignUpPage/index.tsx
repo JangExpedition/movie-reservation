@@ -1,7 +1,7 @@
+import "./index.style.scss";
 import { useEffect, useState } from "react";
 import { TextField, AddressField } from "../../components";
 import { TextFieldType } from "../../types/TextFieldTypes";
-import "./index.style.scss";
 import {
   ContainNumberAcceptor,
   EmailAcceptor,
