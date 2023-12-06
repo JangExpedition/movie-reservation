@@ -13,6 +13,11 @@ const defaultData: UserData = {
   password: "",
 };
 
+const testUser: UserData = {
+  id: "test",
+  password: "1234",
+};
+
 const SignInPage = () => {
   const [userData, setUserData] = useState<UserData>(defaultData);
   const [failMessage, setFailMessage] = useState("");
@@ -28,6 +33,11 @@ const SignInPage = () => {
     if (id === "" || password === "") {
       setFailMessage("아이디 또는 비밀번호를 입력해주세요.");
       return;
+    }
+
+    if (id === testUser.id && password === testUser.password) {
+      setFailMessage("");
+      navigate("/main-page");
     }
 
     const stringUser = localStorage.getItem(id);
