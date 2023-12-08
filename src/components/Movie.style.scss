@@ -1,0 +1,29 @@
+@import "../App.style.scss";
+
+.Movie {
+  width: 30%;
+  overflow-y: scroll;
+  .title {
+    border-top-left-radius: 0.5rem;
+    color: #fff;
+    background-color: $base-color-900;
+    text-align: center;
+    padding: 0.5rem 0;
+    font-weight: bold;
+  }
+  .select {
+    color: #fff;
+    background-color: $base-color-500;
+  }
+  .movie-list {
+    .one-movie {
+      text-align: center;
+      padding: 0.5rem 0;
+      &:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: $base-color-500;
+      }
+    }
+  }
+}
