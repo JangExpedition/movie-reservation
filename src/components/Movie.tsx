@@ -17,11 +17,13 @@ const Movie: React.FC<{ movieClickHandler: (id: number) => void }> = ({ movieCli
   };
 
   const selectMovie = (id: number) => {
-    const selected = document.querySelector(".select");
+    const selecteds = document.querySelectorAll(".select");
 
-    if (selected) {
-      selected.classList.remove("select");
-    }
+    selecteds.forEach((selected) => {
+      if (selected) {
+        selected.classList.contains("one-movie") && selected.classList.remove("select");
+      }
+    });
     document.getElementById(`${id}`)?.classList.add("select");
     movieClickHandler(id);
   };

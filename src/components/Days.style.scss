@@ -1,0 +1,42 @@
+@import "../App.style.scss";
+
+.Days {
+  width: 20%;
+  overflow-y: scroll;
+  .one-day {
+    text-align: center;
+    padding: 0.5rem 0;
+    font-weight: bold;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: $base-color-500;
+    }
+    span {
+      font-weight: lighter;
+    }
+  }
+  .year,
+  .month {
+    text-align: center;
+    padding: 0.5rem 0;
+    color: #fff;
+  }
+  .year {
+    background-color: $base-color-900;
+    font-size: 0.9rem;
+  }
+  .month {
+    background-color: $base-color-700;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+}
+
+.holiday {
+  color: #ad2727;
+}
+
+.saturday {
+  color: $base-color-900;
+}

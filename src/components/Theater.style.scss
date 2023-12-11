@@ -1,5 +1,15 @@
+@import "../App.style.scss";
+
 .Theater {
   width: 40%;
-  background-color: black;
   overflow-y: scroll;
+  .one-theater {
+    text-align: center;
+    padding: 0.5rem 0;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: $base-color-500;
+    }
+  }
 }
