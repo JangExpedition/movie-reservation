@@ -8,7 +8,6 @@ const AddressField = () => {
   const searchAddress = () => {
     new window.daum.Postcode({
       oncomplete: (data: DaumAddress) => {
-        console.log(data);
         setAddress1(`(${data.sigunguCode}) ${data.roadAddress}`);
       },
     }).open();

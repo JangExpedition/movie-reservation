@@ -20,20 +20,18 @@
     background-color: #fff;
     display: flex;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-    .theater {
-      width: 30%;
-      background-color: black;
-      overflow-y: scroll;
-    }
-    .date {
-      width: 10%;
-      background-color: blue;
-      overflow-y: scroll;
-    }
-    .time {
-      width: 30%;
-      background-color: red;
-      overflow-y: scroll;
+    .others {
+      width: 70%;
+      display: none;
+      transition: transform 1s ease-out, opacity 0.5s ease-out;
+      &.visible {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+      &:not(.visible) {
+        transform: translateX(100%);
+        opacity: 0;
+      }
     }
   }
 }
