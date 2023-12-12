@@ -17,6 +17,8 @@ export type ReservationType = {
   movieTitle: string;
   theater: string;
   day: string;
+  number: string;
+  time: string;
 };
 
 export type OneDay = {
@@ -26,4 +28,9 @@ export type OneDay = {
   day: string;
   isHoliday: boolean;
   isSaturday: boolean;
+};
+
+export type Time = {
+  number: string;
+  time: string[];
 };

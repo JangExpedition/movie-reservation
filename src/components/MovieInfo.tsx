@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { image_baseURL } from "../apis/apis";
-import { MovieDetailType, ReservationType } from "../types/MovieTypes";
+import { MovieDetailType } from "../types/MovieTypes";
 import "./MovieInfo.style.scss";
 
 const MovieInfo: React.FC<{

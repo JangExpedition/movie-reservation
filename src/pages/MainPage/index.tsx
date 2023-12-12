@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.style.scss";
-import API, { requests } from "../../apis/apis";
-import { MovieDetailType, OneDay, ReservationType } from "../../types/MovieTypes";
+import API, { getTimeList, requests } from "../../apis/apis";
+import { MovieDetailType, ReservationType } from "../../types/MovieTypes";
 import { Days, Movie, MovieInfo, Theater, Time } from "../../components";
 
 const reservationData: ReservationType = {
@@ -9,6 +9,8 @@ const reservationData: ReservationType = {
   movieTitle: "",
   theater: "",
   day: "",
+  number: "",
+  time: "",
 };
 
 const MainPage = () => {
@@ -16,9 +18,18 @@ const MainPage = () => {
   const [movieData, setMovieData] = useState<MovieDetailType | undefined>(undefined);
   const [reservation, setReservation] = useState(reservationData);
   const otherRef = useRef<HTMLDivElement>(null);
+  const [timeList, setTimeList] = useState<Time[]>([]);
 
   useEffect(() => {
-    console.log(reservation);
+    if (reservation.movieId && reservation.theater && reservation.day) {
+      setTimeList(getTimeList());
+    } else if (
+      reservation.movieId &&
+      reservation.theater &&
+      reservation.day &&
+      reservation.number
+    ) {
+    }
   }, [reservation]);
 
   useEffect(() => {
@@ -41,10 +52,9 @@ const MainPage = () => {
 
   const movieSelectHandler = (id: number, title: string) => {
     setReservation({
+      ...reservation,
       movieId: id,
       movieTitle: title,
-      theater: "",
-      day: "",
     });
     setTimeout(() => setOtherVisible(true), 1000);
   };
@@ -63,16 +73,27 @@ const MainPage = () => {
     });
   };
 
+  const selectTimeHandler = (number: string, time: string) => {
+    setReservation({
+      ...reservation,
+      number,
+      time,
+    });
+  };
+
   return (
     <div className="MainPage">
-      <div className="reservation-section">
-        <Movie movieClickHandler={movieClickHandler} />
-        <MovieInfo movieData={movieData} movieSelectHandler={movieSelectHandler} />
-        <div className="others" ref={otherRef}>
-          <Theater theaterSelectHandler={theaterSelectHandler} />
-          <Days daySelectHandler={daySelectHandler} />
-          <Time />
+      <div className="reservation-wrapper">
+        <div className="reservation-section">
+          <Movie movieClickHandler={movieClickHandler} />
+          <MovieInfo movieData={movieData} movieSelectHandler={movieSelectHandler} />
+          <div className="others" ref={otherRef}>
+            <Theater theaterSelectHandler={theaterSelectHandler} />
+            <Days daySelectHandler={daySelectHandler} />
+            <Time timeList={timeList} selectTimeHandler={selectTimeHandler} />
+          </div>
         </div>
+        <div className="result-section"></div>
       </div>
     </div>
   );
