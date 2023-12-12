@@ -6,3 +6,5 @@ export { default as Movie } from "./Movie";
 export { default as Days } from "./Days";
 export { default as Time } from "./Time";
 export { default as MovieInfo } from "./MovieInfo";
+export { default as ReservationSection } from "./ReservationSection";
+export { default as ResultSection } from "./ResultSection";

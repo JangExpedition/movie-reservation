@@ -13,8 +13,7 @@ export type MovieDetailType = {
 };
 
 export type ReservationType = {
-  movieId: number;
-  movieTitle: string;
+  movie: MovieDetailType | null;
   theater: string;
   day: string;
   number: string;

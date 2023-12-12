@@ -5,7 +5,7 @@ import "./MovieInfo.style.scss";
 
 const MovieInfo: React.FC<{
   movieData: MovieDetailType | undefined;
-  movieSelectHandler: (id: number, title: string) => void;
+  movieSelectHandler: (movie: MovieDetailType) => void;
 }> = ({ movieData, movieSelectHandler }) => {
   const posterUrl = image_baseURL + movieData?.poster_path;
   const [visible, setVisible] = useState(true);
@@ -14,7 +14,7 @@ const MovieInfo: React.FC<{
   const reservation = () => {
     setVisible(false);
     setTimeout(() => MovieInfoRef.current?.classList.add("display-none"), 1000);
-    movieData && movieSelectHandler(movieData?.id, movieData?.title);
+    movieData && movieSelectHandler(movieData);
   };
 
   return (
