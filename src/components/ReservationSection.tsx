@@ -4,25 +4,18 @@ import API, { getTimeList, requests } from "../apis/apis";
 import { MovieDetailType, ReservationType } from "../types/MovieTypes";
 import { Days, Movie, MovieInfo, Theater, Time } from "./index";
 
-const reservationData: ReservationType = {
-  movie: null,
-  theater: "",
-  day: "",
-  number: "",
-  time: "",
-};
-
-const ReservationSection = () => {
+const ReservationSection: React.FC<{
+  reservation: ReservationType;
+  setReservation: React.Dispatch<React.SetStateAction<ReservationType>>;
+}> = ({ reservation, setReservation }) => {
   const [otherVisible, setOtherVisible] = useState<boolean>(false);
   const [movieData, setMovieData] = useState<MovieDetailType | undefined>(undefined);
-  const [reservation, setReservation] = useState(reservationData);
   const otherRef = useRef<HTMLDivElement>(null);
   const [timeList, setTimeList] = useState<Time[]>([]);
 
   useEffect(() => {
     if (reservation.movie && reservation.theater && reservation.day) {
       setTimeList(getTimeList());
-    } else if (reservation.movie && reservation.theater && reservation.day && reservation.number) {
     }
   }, [reservation]);
 

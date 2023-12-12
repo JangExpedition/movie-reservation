@@ -8,3 +8,4 @@ export { default as Time } from "./Time";
 export { default as MovieInfo } from "./MovieInfo";
 export { default as ReservationSection } from "./ReservationSection";
 export { default as ResultSection } from "./ResultSection";
+export { default as MovieResult } from "./MovieResult";

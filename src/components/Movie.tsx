@@ -11,7 +11,6 @@ const Movie: React.FC<{ movieClickHandler: (id: number) => void }> = ({ movieCli
 
   const getMovieList = async () => {
     const response: MovieType[] = (await API.get(requests.fetchTopRated)).data.results;
-    console.log(response);
     setMovieList(response);
     selectMovie(response[0].id);
   };

@@ -21,13 +21,14 @@ const Time: React.FC<{
     <div className="Time">
       {timeList.length > 0 &&
         timeList.map((time) => (
-          <div className="time-wrapper">
+          <div key={time.number} className="time-wrapper">
             <div className="number">{time.number}</div>
             <div className="time-container">
               {time.time?.map((t) => (
                 <div
+                  key={`${time.number}-${t}`}
                   className="one-time"
-                  id={`${time.number}-${time.time}`}
+                  id={`${time.number}-${t}`}
                   onClick={() => selectTime(time.number, t)}
                 >
                   <span>{t}</span>

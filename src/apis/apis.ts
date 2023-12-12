@@ -145,9 +145,9 @@ const times = [
 ];
 
 const timeList: Time[] = [
-  { number: "1관", time: times[Math.floor(Math.random() * 6)] },
-  { number: "2관", time: times[Math.floor(Math.random() * 6)] },
-  { number: "3관", time: times[Math.floor(Math.random() * 6)] },
+  { number: "1관", time: times[Math.floor(Math.random() * 5)] },
+  { number: "2관", time: times[Math.floor(Math.random() * 5)] },
+  { number: "3관", time: times[Math.floor(Math.random() * 5)] },
 ];
 
 export const getTimeList = () => {

@@ -14,6 +14,6 @@ $base-color-700: #1b64da;
 $base-color-900: #194aa6;
 
 .select {
-  color: #fff;
-  background-color: $base-color-500;
+  color: #fff !important;
+  background-color: $base-color-500 !important;
 }
