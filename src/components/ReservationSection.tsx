@@ -7,7 +7,8 @@ import { Days, Movie, MovieInfo, Theater, Time } from "./index";
 const ReservationSection: React.FC<{
   reservation: ReservationType;
   setReservation: React.Dispatch<React.SetStateAction<ReservationType>>;
-}> = ({ reservation, setReservation }) => {
+  reservationRef: React.RefObject<HTMLDivElement>;
+}> = ({ reservation, setReservation, reservationRef }) => {
   const [otherVisible, setOtherVisible] = useState<boolean>(false);
   const [movieData, setMovieData] = useState<MovieDetailType | undefined>(undefined);
   const otherRef = useRef<HTMLDivElement>(null);
@@ -71,7 +72,7 @@ const ReservationSection: React.FC<{
   };
 
   return (
-    <div className="ReservationSection">
+    <div className="ReservationSection" ref={reservationRef}>
       <Movie movieClickHandler={movieClickHandler} />
       <MovieInfo
         movieData={movieData}
