@@ -15,7 +15,6 @@ const MainPage = () => {
   const [reservation, setReservation] = useState(reservationData);
 
   useEffect(() => {
-    console.log(reservation);
     if (reservation.movie && reservation.theater && reservation.day && reservation.number) {
       console.log("!!!");
     }

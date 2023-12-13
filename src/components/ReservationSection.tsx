@@ -12,6 +12,7 @@ const ReservationSection: React.FC<{
   const [movieData, setMovieData] = useState<MovieDetailType | undefined>(undefined);
   const otherRef = useRef<HTMLDivElement>(null);
   const [timeList, setTimeList] = useState<Time[]>([]);
+  const MovieInfoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (reservation.movie && reservation.theater && reservation.day) {
@@ -34,7 +35,9 @@ const ReservationSection: React.FC<{
       (movie: MovieDetailType) => movie.id === id
     )[0];
 
-    setMovieData(movieData);
+    MovieInfoRef.current?.classList.contains("display-none")
+      ? movieSelectHandler(movieData)
+      : setMovieData(movieData);
   };
 
   const movieSelectHandler = (movie: MovieDetailType) => {
@@ -70,7 +73,11 @@ const ReservationSection: React.FC<{
   return (
     <div className="ReservationSection">
       <Movie movieClickHandler={movieClickHandler} />
-      <MovieInfo movieData={movieData} movieSelectHandler={movieSelectHandler} />
+      <MovieInfo
+        movieData={movieData}
+        movieSelectHandler={movieSelectHandler}
+        MovieInfoRef={MovieInfoRef}
+      />
       <div className="others" ref={otherRef}>
         <Theater theaterSelectHandler={theaterSelectHandler} />
         <Days daySelectHandler={daySelectHandler} />

@@ -6,10 +6,10 @@ import "./MovieInfo.style.scss";
 const MovieInfo: React.FC<{
   movieData: MovieDetailType | undefined;
   movieSelectHandler: (movie: MovieDetailType) => void;
-}> = ({ movieData, movieSelectHandler }) => {
+  MovieInfoRef: React.RefObject<HTMLDivElement>;
+}> = ({ movieData, movieSelectHandler, MovieInfoRef }) => {
   const posterUrl = image_baseURL + movieData?.poster_path;
   const [visible, setVisible] = useState(true);
-  const MovieInfoRef = useRef<HTMLDivElement>(null);
 
   const reservation = () => {
     setVisible(false);
