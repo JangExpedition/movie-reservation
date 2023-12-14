@@ -30,7 +30,7 @@ const MovieInfo: React.FC<{
             </div>
           </div>
           <div className="bottom-container">
-            <p className="overview">{movieData.overview}</p>
+            <div className="overview">{movieData.overview}</div>
             <div>
               <button className="reservation-btn" onClick={reservation}>
                 예매하기

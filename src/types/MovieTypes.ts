@@ -18,6 +18,7 @@ export type ReservationType = {
   day: string;
   number: string;
   time: string;
+  seatList: string[];
 };
 
 export type OneDay = {

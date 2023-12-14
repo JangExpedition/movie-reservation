@@ -9,6 +9,7 @@ const reservationData: ReservationType = {
   day: "",
   number: "",
   time: "",
+  seatList: [],
 };
 
 const MainPage = () => {
@@ -23,7 +24,7 @@ const MainPage = () => {
         reRef.classList.add("not-visible");
         setTimeout(() => (reRef.style.display = "none"), 1000);
       }
-      seatRef.current?.classList.remove("not-visible");
+      setTimeout(() => seatRef.current?.classList.remove("not-visible"), 1000);
     }
   }, [reservation]);
 
@@ -35,7 +36,7 @@ const MainPage = () => {
           setReservation={setReservation}
           reservationRef={reservationRef}
         />
-        <SeatSection seatRef={seatRef} />
+        <SeatSection reservation={reservation} setReservation={setReservation} seatRef={seatRef} />
         <ResultSection reservation={reservation} />
       </div>
     </div>
