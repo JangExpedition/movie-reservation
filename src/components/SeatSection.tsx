@@ -30,6 +30,8 @@ const SeatSection: React.FC<{
 
     if (target.classList.contains("select")) {
       target.classList.remove("select");
+      const seatList: string[] = reservation.seatList.filter((seat) => seat != target.innerHTML);
+      setReservation({ ...reservation, seatList });
     } else {
       let selecteds = document.querySelectorAll(".select");
 

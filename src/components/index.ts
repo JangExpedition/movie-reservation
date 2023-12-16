@@ -9,3 +9,4 @@ export { default as MovieInfo } from "./MovieInfo";
 export { default as ReservationSection } from "./ReservationSection";
 export { default as ResultSection } from "./ResultSection";
 export { default as SeatSection } from "./SeatSection";
+export { default as ReservationResult } from "./ReservationResult";

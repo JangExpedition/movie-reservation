@@ -1,5 +1,10 @@
 import "./index.style.scss";
-import { ReservationSection, ResultSection, SeatSection } from "../../components/index";
+import {
+  ReservationResult,
+  ReservationSection,
+  ResultSection,
+  SeatSection,
+} from "../../components/index";
 import { ReservationType } from "../../types/MovieTypes";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,6 +19,7 @@ const reservationData: ReservationType = {
 
 const MainPage = () => {
   const [reservation, setReservation] = useState(reservationData);
+  const [start, setStart] = useState(false);
   const reservationRef = useRef<HTMLDivElement>(null);
   const seatRef = useRef<HTMLDivElement>(null);
 
@@ -28,16 +34,30 @@ const MainPage = () => {
     }
   }, [reservation]);
 
+  const reservationStart = () => {
+    setStart(true);
+  };
+
   return (
     <div className="MainPage">
       <div className="reservation-wrapper">
-        <ReservationSection
-          reservation={reservation}
-          setReservation={setReservation}
-          reservationRef={reservationRef}
-        />
-        <SeatSection reservation={reservation} setReservation={setReservation} seatRef={seatRef} />
-        <ResultSection reservation={reservation} />
+        {start ? (
+          <ReservationResult reservation={reservation} />
+        ) : (
+          <>
+            <ReservationSection
+              reservation={reservation}
+              setReservation={setReservation}
+              reservationRef={reservationRef}
+            />
+            <SeatSection
+              reservation={reservation}
+              setReservation={setReservation}
+              seatRef={seatRef}
+            />
+            <ResultSection reservation={reservation} reservationStart={reservationStart} />
+          </>
+        )}
       </div>
     </div>
   );

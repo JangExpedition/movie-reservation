@@ -3,20 +3,14 @@ import { ReservationType } from "../types/MovieTypes";
 import "./ResultSection.style.scss";
 import { image_baseURL } from "../apis/apis";
 
-const ResultSection: React.FC<{ reservation: ReservationType }> = ({ reservation }) => {
+const ResultSection: React.FC<{ reservation: ReservationType; reservationStart: () => void }> = ({
+  reservation,
+  reservationStart,
+}) => {
   const [posterUrl, setPosterUrl] = useState("");
-  const reservationBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     reservation.movie?.poster_path && setPosterUrl(image_baseURL + reservation.movie.poster_path);
-    if (
-      reservation.movie &&
-      reservation.theater &&
-      reservation.day &&
-      reservation.number &&
-      reservation.seatList
-    ) {
-    }
   }, [reservation]);
 
   return (
@@ -63,13 +57,21 @@ const ResultSection: React.FC<{ reservation: ReservationType }> = ({ reservation
           </div>
         </div>
       ) : (
-        <div className="no-data">
+        <div className="no-data-1">
           <p>영화를 선택해주세요.</p>
         </div>
       )}
-      <div className="reservation-btn-container">
-        <button>예매하기</button>
-      </div>
+      {reservation.movie &&
+      reservation.theater &&
+      reservation.day &&
+      reservation.number &&
+      reservation.seatList.length > 0 ? (
+        <div className="reservation-btn-container">
+          <button onClick={reservationStart}>예매하기</button>
+        </div>
+      ) : (
+        <div className="no-data-2"></div>
+      )}
     </div>
   );
 };

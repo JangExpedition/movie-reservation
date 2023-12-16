@@ -33,7 +33,7 @@ const MovieInfo: React.FC<{
             <div className="overview">{movieData.overview}</div>
             <div>
               <button className="reservation-btn" onClick={reservation}>
-                예매하기
+                영화 선택
               </button>
             </div>
           </div>
