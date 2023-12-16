@@ -10,6 +10,7 @@ import {
   StartNumberAcceptor,
   WhitespaceAcceptor,
 } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 const textFieldList: TextFieldType[] = [
   {
@@ -63,6 +64,7 @@ const AllIsValid = [
 
 const SignUpPage: React.FC = () => {
   const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {}, [AllIsValid]);
 
@@ -103,6 +105,7 @@ const SignUpPage: React.FC = () => {
     }, {});
 
     localStorage.setItem(id, JSON.stringify(result));
+    navigate("/");
   };
 
   return (
